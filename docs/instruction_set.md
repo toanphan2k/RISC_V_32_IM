@@ -28,7 +28,7 @@ All RV32I instructions are 32 bits wide. Register addresses `rd`, `rs1`, `rs2` a
 | **LUI** | U | `imm[31:25]` | `imm[24:20]` | `imm[19:15]` | `imm[14:12]` | `rd` | `0110111` | $R[rd] = \text{imm} \ll 12$ |
 | **AUIPC** | U | `imm[31:25]` | `imm[24:20]` | `imm[19:15]` | `imm[14:12]` | `rd` | `0010111` | $R[rd] = PC + (\text{imm} \ll 12)$ |
 | **JAL** | J | `imm[20\|10:5]` | `imm[4:1\|11]` | `imm[19:15]` | `imm[14:12]` | `rd` | `1101111` | $R[rd] = PC + 4; \ PC = PC + \text{imm}$ |
-| **JALR** | I | `imm[11:5]` | `imm[4:0]` | `rs1` | `000` | `rd` | `1100111` | $R[rd] = PC + 4; \ PC = (R[rs1] + \text{imm}) \ \& \ \sim 1$ |
+| **JALR** | I | `imm[11:5]` | `imm[4:0]` | `rs1` | `000` | `rd` | `1100111` | $R[rd] = PC + 4; \quad PC = (R[rs1] + \text{imm}) \ \&\sim 1$ |
 | **BEQ** | B | `imm[12\|10:5]` | `rs2` | `rs1` | `000` | `imm[4:1\|11]` | `1100011` | if ($R[rs1] == R[rs2]$) $PC = PC + \text{imm}$ |
 | **BNE** | B | `imm[12\|10:5]` | `rs2` | `rs1` | `001` | `imm[4:1\|11]` | `1100011` | if ($R[rs1] \neq R[rs2]$) $PC = PC + \text{imm}$ |
 | **BLT** | B | `imm[12\|10:5]` | `rs2` | `rs1` | `100` | `imm[4:1\|11]` | `1100011` | if ($R[rs1] < R[rs2]$ signed) $PC = PC + \text{imm}$ |
