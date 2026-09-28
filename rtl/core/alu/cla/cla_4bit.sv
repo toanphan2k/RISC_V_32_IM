@@ -1,4 +1,4 @@
-module cla_4bit_adder (
+module cla_4bit (
     input logic     [3:0] a,
     input logic     [3:0] b,
     input logic     cin,
@@ -25,7 +25,7 @@ module cla_4bit_adder (
     assign prop_group = prop[3] & prop[2] & prop[1] & prop[0];
 
     // carry out
-    assign cout = gen_group | (prop_group&cin);
+    assign cout = gen_group | (prop_group & cin);
 
     // sum
     assign sum[0] = prop[0] ^ cin;

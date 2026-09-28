@@ -17,12 +17,12 @@ module tb_cla_4bit;
     int error_count = 0;
 
     // Instantiate Design Under Test (DUT)
-    cla_4bit_adder dut (
+    cla_4bit dut (
         .a   (a),
         .b   (b),
         .cin (cin),
         .sum (sum),
-        .cout(cout)
+        .cout(cout),
         .gen_group(gen_group),
         .prop_group(prop_group)
     );
