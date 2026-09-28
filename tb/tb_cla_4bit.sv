@@ -10,17 +10,21 @@ module tb_cla_4bit;
     // DUT outputs
     logic [3:0] sum;
     logic       cout;
+    logic       gen_group;
+    logic       prop_group;
 
     // Internal tracker for error count
     int error_count = 0;
 
     // Instantiate Design Under Test (DUT)
-    cla_4bit dut (
+    cla_4bit_adder dut (
         .a   (a),
         .b   (b),
         .cin (cin),
         .sum (sum),
         .cout(cout)
+        .gen_group(gen_group),
+        .prop_group(prop_group)
     );
 
     // Verification task to check DUT outputs against reference math
