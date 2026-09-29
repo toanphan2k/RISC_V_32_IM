@@ -2,7 +2,7 @@ module cla_32bit_lau (
     input logic [7:0]   gen_group, // 8 groups of generate signals from 4-bit adders
     input logic [7:0]   prop_group, // 8 groups of propagate signals from 4-bit adders
     input logic         cin, // global carry-in for the 32-bit adder
-    output logic [7:0]  carry_out, // block carry-out input for each 4-bit adder
+    output logic [7:0]  block_carry, // block carry-out input for each 4-bit adder
     output logic        cout // final carry-out for the 32-bit adder
 
 );
@@ -44,13 +44,13 @@ module cla_32bit_lau (
 
     assign cout = high_block_gen | (high_block_prop & c_mid);
 
-    assign carry_out[0] = c_low[0];
-    assign carry_out[1] = c_low[1];
-    assign carry_out[2] = c_low[2];
-    assign carry_out[3] = c_low[3];
-    assign carry_out[4] = c_high[0];
-    assign carry_out[5] = c_high[1];
-    assign carry_out[6] = c_high[2];
-    assign carry_out[7] = c_high[3];
+    assign block_carry[0] = c_low[0];
+    assign block_carry[1] = c_low[1];
+    assign block_carry[2] = c_low[2];
+    assign block_carry[3] = c_low[3];
+    assign block_carry[4] = c_high[0];
+    assign block_carry[5] = c_high[1];
+    assign block_carry[6] = c_high[2];
+    assign block_carry[7] = c_high[3];
 
 endmodule
