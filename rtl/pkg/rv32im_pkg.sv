@@ -1,4 +1,6 @@
 package rv32im_pkg;
+    // REGISTER LENGTH
+    localparam int unsigned XLEN = 32;
 
     // RISC-V 32-bit base opcodes, [6:0] of instruction
     typedef enum logic [6:0] {
@@ -69,5 +71,56 @@ package rv32im_pkg;
         ALU_AND     = 4'b1001,
         ALU_PASS_B  = 4'b1010
     } alu_opcode_e;
+
+    // Forwarding select signal
+    // FWD_WB: forward from write back stages
+    // FWD_MEM: forward from memory stage
+    typedef enum logic [1:0] {
+        FWD_NONE    = 2'b00,
+        FWD_MEM     = 2'b01,
+        FWD_WB      = 2'b10
+    } fwd_sel_e;
+
+    // ALU source A select signal
+    typedef enum logic [1:0] {
+        ALU_SRC_A_RS1   = 2'b00,
+        ALU_SRC_A_PC    = 2'b01,
+        ALU_SRC_A_ZERO  = 2'b10
+    } alu_src_a_sel_e;
+
+    // ALU source B select signal
+    typedef enum logic {
+        ALU_SRC_B_RS2 = 2'b0,
+        ALU_SRC_B_IMM = 1'b1
+    } alu_src_b_sel_e;
+
+    // Write back source select signal
+    typedef enum logic [1:0] {
+        WB_SRC_ALU     = 2'b00,
+        WB_SRC_MEM     = 2'b01,
+        WB_SRC_PC_4    = 2'b10,
+        WB_SRC_M_EXT   = 2'b11
+    } wb_src_sel_e;
+
+    // Control signal structure
+    typedef struct packed {
+        logic           en_reg_write;
+        logic           en_mem_read;
+        logic           en_mem_write;
+        logic           en_branch;
+        logic           en_m_ext;
+        logic           en_jalr;
+        logic           en_jump;
+        alu_opcode_e    alu_opcode;
+        m_ext_opcode_e  m_ext_opcode;
+        alu_src_a_sel_e alu_src_a_sel;
+        alu_src_b_sel_e alu_src_b_sel;
+        wb_src_sel_e    wb_src_sel;
+        logic           [2:0] funct3;
+        logic           is_fence;
+        logic           is_ecall;
+        logic           is_ebreak;
+        logic           illegal_instr;
+    } ctrl_signal_t;
 
 endpackage : rv32im_pkg

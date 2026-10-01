@@ -1,10 +1,10 @@
 import rv32im_pkg::*;
 
 module alu_rv32 (
-    input logic [31:0] operand_a,
-    input logic [31:0] operand_b,
+    input logic [XLEN-1:0] operand_a,
+    input logic [XLEN-1:0] operand_b,
     input alu_opcode_e opcode,
-    output logic [31:0] result,
+    output logic [XLEN-1:0] result,
     output logic zero_flag,
     output logic less_than_flag,
     output logic less_than_unsigned_flag

@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.12] - 2026-10-02
+
+### Added
+- Select signal for execution stage in package
+- Add pack control signal in package
+- Add stage_ex.sv
+- Add local parameter XLEN = 32
+### Changed
+- Replace MSB 32 with XLEN in all files
+
 ## [0.0.11] - 2026-09-30
 
 ### Added

@@ -1,14 +1,14 @@
 module cla_32bit (
-    input logic [31:0]  a,
-    input logic [31:0]  b,
+    input logic [XLEN-1:0]  a,
+    input logic [XLEN-1:0]  b,
     input logic         sub_en, // 0 for addition, 1 for subtraction
-    output logic [31:0] result,
+    output logic [XLEN-1:0] result,
     output logic        cout,
     output logic        overflow,
     output logic        zero,
     output logic        negative
 );
-    logic [31:0]    operand_b;
+    logic [XLEN-1:0]    operand_b;
     logic           cin;
     logic [7:0]     gen_group;
     logic [7:0]     prop_group;
