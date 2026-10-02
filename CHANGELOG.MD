@@ -1,4 +1,13 @@
 # Changelog
+
+## [0.1.1] - 2026-10-03
+
+### Added
+- add RISCV_ISA_Architect.md to show the structure of instruction and RISCV microarchitect
+- add ISA instruction type images and RISCV microarchitect images
+### Changed
+- migrate images to docs/images
+
 ## [0.1.0] - 2026-10-03
 
 ### Fixed
@@ -11,6 +20,7 @@
 
 ### Changed
 - Change 5 bit of register address [4:0] to [REG_ADDR_WIDTH-1:0]
+- Format indent for beauty
 
 ## [0.0.12] - 2026-10-02
 
