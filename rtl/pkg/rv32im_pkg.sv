@@ -1,6 +1,7 @@
 package rv32im_pkg;
     // REGISTER LENGTH
     localparam int unsigned XLEN = 32;
+    localparam int unsigned REG_ADDR_WIDTH = 5;
 
     // RISC-V 32-bit base opcodes, [6:0] of instruction
     typedef enum logic [6:0] {

@@ -1,33 +1,33 @@
 import rv32im_pkg::*;
 
 module stage_ex (
-    input  logic                clk,
-    input  logic                rst_n,
+    input  logic                    clk,
+    input  logic                    rst_n,
     // Inputs from ID/EX stage
-    input  control_signal_t     ex_in_ctrl,
-    input  logic [XLEN-1:0]     ex_pc,
-    input  logic [XLEN-1:0]     ex_pc_plus4,
-    input  logic [XLEN-1:0]     ex_rs1_data,
-    input  logic [XLEN-1:0]     ex_rs2_data,
-    input  logic [XLEN-1:0]     ex_imm,
-    input  logic [4:0]          ex_rd_addr,
+    input  control_signal_t         ex_in_ctrl,
+    input  logic [XLEN-1:0]         ex_pc,
+    input  logic [XLEN-1:0]         ex_pc4,
+    input  logic [XLEN-1:0]         ex_rs1_data,
+    input  logic [XLEN-1:0]         ex_rs2_data,
+    input  logic [XLEN-1:0]         ex_imm,
+    input  logic [REG_ADDR_WIDTH-1:0]   ex_rd_addr,
     // Forwarding select signals
-    input  fwd_sel_e            sel_a,
-    input  fwd_sel_e            sel_b,
-    input  logic [XLEN-1:0]     fwd_mem_data,
-    input  logic [XLEN-1:0]     fwd_wb_data,
+    input  fwd_sel_e                sel_a,
+    input  fwd_sel_e                sel_b,
+    input  logic [XLEN-1:0]         fwd_mem_data,
+    input  logic [XLEN-1:0]         fwd_wb_data,
     // Outputs to EX/MEM register
-    output control_signal_t     ex_out_ctrl,
-    output logic [XLEN-1:0]     ex_out_pc4,
-    output logic [XLEN-1:0]     ex_out_alu_result,
-    output logic [XLEN-1:0]     ex_out_m_unit_result,
-    output logic [XLEN-1:0]     ex_out_rs2_data,
-    output logic [4:0]          ex_out_rd_addr,
+    output control_signal_t         ex_out_ctrl,
+    output logic [XLEN-1:0]         ex_out_pc4,
+    output logic [XLEN-1:0]         ex_out_alu_result,
+    output logic [XLEN-1:0]         ex_out_m_unit_result,
+    output logic [XLEN-1:0]         ex_out_rs2_data,
+    output logic [REG_ADDR_WIDTH-1:0]    ex_out_rd_addr,
     // Branch / Jump feedback to IF stage
-    output logic                branch_taken,
-    output logic [XLEN-1:0]     branch_target_addr,
+    output logic                    branch_taken,
+    output logic [XLEN-1:0]         branch_target_addr,
     // Stall signal to Hazard Unit
-    output logic                m_unit_busy
+    output logic                    m_unit_busy
 
 );
 
@@ -106,12 +106,12 @@ module stage_ex (
     // Block 5: Branch Target Calculation
     assign branch_taken = (ex_in_ctrl.en_branch && br_cond_met) || ex_in_ctrl.en_jump;
     assign branch_target = ex_in_ctrl.en_jalr ? ((fwd_rs1_data + ex_imm) & 32'h1) :
-                                                (ex_pc + ex_imm)
+                                                (ex_pc + ex_imm);
 
     // Block 6: Outputs to EX/MEM Register
     assign ex_out_ctrl = ex_in_ctrl;
     assign ex_rs2_data = fwd_rs2_data;
-    assign ex_out_pc4 = ex_pc_plus4;
+    assign ex_out_pc4 = ex_pc4;
     assign ex_out_rd_addr = ex_rd_addr;
 
 endmodule

@@ -1,3 +1,5 @@
+import rv32im_pkg::*;
+
 module cla_32bit (
     input logic [XLEN-1:0]  a,
     input logic [XLEN-1:0]  b,

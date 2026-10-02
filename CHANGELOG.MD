@@ -1,4 +1,16 @@
 # Changelog
+## [0.1.0] - 2026-10-03
+
+### Fixed
+- Fixed missing import package in cla_32bit.sv
+- Fixed missing ; in stage_ex.sv
+
+### Added
+- reg between each stage: reg_if_id, reg_id_ex, reg_ex_mem, reg_mem_wb
+- Add REG_ADDR_WIDTH in constant
+
+### Changed
+- Change 5 bit of register address [4:0] to [REG_ADDR_WIDTH-1:0]
 
 ## [0.0.12] - 2026-10-02
 
