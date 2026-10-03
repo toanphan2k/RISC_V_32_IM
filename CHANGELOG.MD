@@ -1,10 +1,19 @@
 # Changelog
 
+## [0.1.2] - 2026-10-03
+
+### Added
+- add IMMEDIATE_GENERATOR module to gen IMM depend on OPCODE
+
+### Changed
+- instruction -> instr in input and output for consitency
+
 ## [0.1.1] - 2026-10-03
 
 ### Added
 - add RISCV_ISA_Architect.md to show the structure of instruction and RISCV microarchitect
 - add ISA instruction type images and RISCV microarchitect images
+
 ### Changed
 - migrate images to docs/images
 
