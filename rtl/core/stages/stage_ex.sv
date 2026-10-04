@@ -16,7 +16,7 @@ module stage_ex (
     input  fwd_sel_e                sel_b,
     input  logic [XLEN-1:0]         fwd_mem_data,
     input  logic [XLEN-1:0]         fwd_wb_data,
-    // Outputs to EX/MEM register
+    // Outputs to EX/MEM Register
     output control_signal_t         ex_out_ctrl,
     output logic [XLEN-1:0]         ex_out_pc4,
     output logic [XLEN-1:0]         ex_out_alu_result,

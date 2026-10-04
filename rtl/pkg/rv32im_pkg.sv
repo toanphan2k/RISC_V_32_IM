@@ -44,6 +44,18 @@ package rv32im_pkg;
         ST_SW   = 3'b010
     } store_funct3_e;
 
+    // RISC-V 32 IMM funct3, [14:12] of instruction
+    typedef enum logic [2:0] {
+        IMM_ADDI    = 3'b000,
+        IMM_SLTI    = 3'b010,
+        IMM_SLTIU   = 3'b011,
+        IMM_XORI    = 3'b100,
+        IMM_ORI     = 3'b110,
+        IMM_ANDI    = 3'b111,
+        IMM_SLLI    = 3'b001,
+        IMM_SHIFT   = 3'b101
+    } imm_funct3_e;
+
     // RISC-V 32 M extension funct3, [14:12] of instruction
     // encoding when opcode=OP_REG and funct7=7'b0000001
     typedef enum logic [2:0] {
@@ -73,6 +85,14 @@ package rv32im_pkg;
         ALU_PASS_B  = 4'b1010
     } alu_opcode_e;
 
+    // FUNCT 7 Enum for R-type
+    // Helping navigate to M extenstion or ALU Block
+    typedef enum logic [6:0] {
+        FUNCT7_M       = 7'b0000001,
+        FUNCT7_I       = 7'b0000000,
+        FUNCT7_I_SHIFT = 7'b0100000
+    } funct7_e;
+
     // Forwarding select signal
     // FWD_WB: forward from write back stages
     // FWD_MEM: forward from memory stage
@@ -91,7 +111,7 @@ package rv32im_pkg;
 
     // ALU source B select signal
     typedef enum logic {
-        ALU_SRC_B_RS2 = 2'b0,
+        ALU_SRC_B_RS2 = 1'b0,
         ALU_SRC_B_IMM = 1'b1
     } alu_src_b_sel_e;
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.3] - 2026-10-05
+
+### Added
+- add Funct 7 enum to navigate between ALU block and M-Ext block
+- add imm_funct3_e enum to switch case
+
+### Changed
+- imm_gen.sv rename to id_imm_gen.sv
+
+### Fixed
+- alu_src_b_sel_e ALU_SRC_B_RS2 to 1 bit
+- Fix OP_IMM to correct 32 bit input
+
 ## [0.1.2] - 2026-10-03
 
 ### Added
