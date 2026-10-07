@@ -2,6 +2,7 @@ package rv32im_pkg;
     // REGISTER LENGTH
     localparam int unsigned XLEN = 32;
     localparam int unsigned REG_ADDR_WIDTH = 5;
+    localparam int unsigned REG_NUM = 32;
 
     // RISC-V 32-bit base opcodes, [6:0] of instruction
     typedef enum logic [6:0] {
@@ -44,17 +45,28 @@ package rv32im_pkg;
         ST_SW   = 3'b010
     } store_funct3_e;
 
-    // RISC-V 32 IMM funct3, [14:12] of instruction
+    // RISC-V 32 IMM/REG funct3, [14:12] of instruction
     typedef enum logic [2:0] {
-        IMM_ADDI    = 3'b000,
-        IMM_SLTI    = 3'b010,
-        IMM_SLTIU   = 3'b011,
-        IMM_XORI    = 3'b100,
-        IMM_ORI     = 3'b110,
-        IMM_ANDI    = 3'b111,
-        IMM_SLLI    = 3'b001,
-        IMM_SHIFT   = 3'b101
-    } imm_funct3_e;
+        ADD    = 3'b000,
+        SLT    = 3'b010,
+        SLTU   = 3'b011,
+        XOR    = 3'b100,
+        OR     = 3'b110,
+        AND    = 3'b111,
+        SLL    = 3'b001,
+        SHIFT  = 3'b101
+    } funct3_e;
+
+    // RISC-V 32 SYSTEM funct3, [14:12] of instruction
+    typedef enum logic [2:0] {
+        ENV     = 3'b000,
+        CSRRW   = 3'b001,
+        CSRRS   = 3'b010,
+        CSRRC   = 3'b011,
+        CSRRWI  = 3'b101,
+        CSRRSI  = 3'b110,
+        CSRRCI  = 3'b111,
+    } system_funct3_e;
 
     // RISC-V 32 M extension funct3, [14:12] of instruction
     // encoding when opcode=OP_REG and funct7=7'b0000001
@@ -141,7 +153,7 @@ package rv32im_pkg;
         logic           is_fence;
         logic           is_ecall;
         logic           is_ebreak;
-        logic           illegal_instr;
+        logic           illegal_instr; // not yet handle, need to be handled
     } ctrl_signal_t;
 
 endpackage : rv32im_pkg

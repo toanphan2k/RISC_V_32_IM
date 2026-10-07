@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.4] - 2026-10-07
+
+### Added
+- add REG_NUM constant
+- add id_register_file.sv
+- add stage_id.sv
+- add id_decoder_ctrl.sv
+
+### Changed
+- imm_funct3_e renamed to funct3_e to distinguish with system_funct3_e
+
 ## [0.1.3] - 2026-10-05
 
 ### Added
