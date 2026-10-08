@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.5] - 2026-10-08
+
+## Fixed
+- fix syntax error in rv32im_pkg.sv
+- fix syntax error in stage_id.sv
+
 ## [0.1.4] - 2026-10-07
 
 ### Added

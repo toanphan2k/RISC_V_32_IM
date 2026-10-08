@@ -65,7 +65,7 @@ package rv32im_pkg;
         CSRRC   = 3'b011,
         CSRRWI  = 3'b101,
         CSRRSI  = 3'b110,
-        CSRRCI  = 3'b111,
+        CSRRCI  = 3'b111
     } system_funct3_e;
 
     // RISC-V 32 M extension funct3, [14:12] of instruction
