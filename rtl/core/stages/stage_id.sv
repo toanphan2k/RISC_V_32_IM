@@ -33,7 +33,7 @@ module stage_id (
         .imm(id_imm)
     );
 
-    id_register_file id_register_file_u (
+    register_file register_file_u (
         .clk(clk),
         .rstn(rstn),
         .raddr1(id_rs1_addr),

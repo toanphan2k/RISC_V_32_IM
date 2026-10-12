@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.3] - 2026-10-12
+
+### Added
+- init M-Extension Unit input/output
+
 ## [0.2.2] - 2026-10-12
 
 ### Added
