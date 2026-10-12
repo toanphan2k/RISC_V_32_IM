@@ -1,4 +1,4 @@
-module id_register_file (
+module register_file (
     input logic clk;
     input logic rstn;
 
@@ -17,7 +17,7 @@ module id_register_file (
 
     // Synchronous write data
     integer i;
-    always_ff @(posedge clk or negedge rstn) begin: WRITE_DATA
+    always_ff @(posedge clk or negedge rstn) begin: WRITE_REG_DATA
         if(!rstn) begin
             for (i = 0; i < REG_NUM; i = i + 1) begin
                 regs[i] <= {XLEN{1'b0}}
@@ -30,7 +30,7 @@ module id_register_file (
     end
 
     // Asynchronous read
-    always_comb begin : READ_DATA_1
+    always_comb begin : READ_REG1_DATA
         if (raddr1 == 5'b0) begin
             rdata1 = {XLEN{1'b0}};
         end else if ((en_write && (waddr == raddr1))) begin
@@ -40,7 +40,7 @@ module id_register_file (
         end
     end
 
-    always_comb begin : READ_DATA_2
+    always_comb begin : READ_REG2_DATA
         if (raddr2 == 5'b0) begin
             rdata2 = {XLEN{1'b0}};
         end else if ((en_write && (waddr == raddr2))) begin

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.6] - 2026-10-12
+
+### Changed
+- Rename id_register_file.sv -> register_file.sv
+
 ## [0.1.5] - 2026-10-08
 
 ## Fixed
