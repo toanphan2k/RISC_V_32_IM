@@ -1,9 +1,16 @@
 # Changelog
 
+## [0.2.4] - 2026-10-13
+
+### Added
+- Add Instruction ROM
+- Add Data Memory RAM
+- Add sample memory testbench
+
 ## [0.2.3] - 2026-10-12
 
 ### Added
-- init M-Extension Unit input/output
+- Added writeback stage
 
 ## [0.2.2] - 2026-10-12
 
