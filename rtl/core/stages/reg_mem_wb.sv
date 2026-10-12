@@ -27,15 +27,15 @@ module reg_mem_wb (
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             wb_ctrl             <= nop_ctrl;
-            wb_alu_result       <= 32'b0;
-            wb_m_unit_result    <= 32'b0;
-            wb_pc4              <= 32'b0;
+            wb_alu_result       <= RST_32BIT_VECTOR;
+            wb_m_unit_result    <= RST_32BIT_VECTOR;
+            wb_pc4              <= RST_32BIT_VECTOR;
             wb_rd_addr          <= 5'b0;
         end else if (flush) begin
             wb_ctrl             <= nop_ctrl;
-            wb_alu_result       <= 32'b0;
-            wb_m_unit_result    <= 32'b0;
-            wb_pc4              <= 32'b0;
+            wb_alu_result       <= RST_32BIT_VECTOR;
+            wb_m_unit_result    <= RST_32BIT_VECTOR;
+            wb_pc4              <= RST_32BIT_VECTOR;
             wb_rd_addr          <= 5'b0;
         end else if (!stall) begin
             wb_ctrl             <= mem_ctrl;

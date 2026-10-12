@@ -27,17 +27,17 @@ module reg_ex_mem (
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             mem_ctrl            <= nop_ctrl;
-            mem_pc4             <= 32'b0;
-            mem_alu_result      <= 32'b0;
-            mem_m_unit_result   <= 32'b0;
-            mem_rs2_data        <= 32'b0;
+            mem_pc4             <= RST_32BIT_VECTOR;
+            mem_alu_result      <= RST_32BIT_VECTOR;
+            mem_m_unit_result   <= RST_32BIT_VECTOR;
+            mem_rs2_data        <= RST_32BIT_VECTOR;
             mem_rd_addr         <= 4'b0;
         end else if (flush) begin
             mem_ctrl            <= nop_ctrl;
-            mem_pc4             <= 32'b0;
-            mem_alu_result      <= 32'b0;
-            mem_m_unit_result   <= 32'b0;
-            mem_rs2_data        <= 32'b0;
+            mem_pc4             <= RST_32BIT_VECTOR;
+            mem_alu_result      <= RST_32BIT_VECTOR;
+            mem_m_unit_result   <= RST_32BIT_VECTOR;
+            mem_rs2_data        <= RST_32BIT_VECTOR;
             mem_rd_addr         <= 4'b0;
         end else if (!stall) begin
             mem_ctrl            <= ex_ctrl;

@@ -1,8 +1,12 @@
 package rv32im_pkg;
     // REGISTER LENGTH
-    localparam int unsigned XLEN = 32;
-    localparam int unsigned REG_ADDR_WIDTH = 5;
-    localparam int unsigned REG_NUM = 32;
+    localparam int unsigned XLEN            = 32;
+    localparam int unsigned REG_ADDR_WIDTH  = 5;
+    localparam int unsigned REG_NUM         = 32;
+
+    localparam logic [XLEN-1:0] RST_32BIT_VECTOR    = 32'h0000_0000;
+    localparam logic [XLEN-1:0] TRAP_VECTOR     = 32'h0000_0004;
+    localparam logic [XLEN-1:0] NOP_INSTR       = 32'h0000_0013;
 
     // RISC-V 32-bit base opcodes, [6:0] of instruction
     typedef enum logic [6:0] {
@@ -155,5 +159,22 @@ package rv32im_pkg;
         logic           is_ebreak;
         logic           illegal_instr; // not yet handle, need to be handled
     } ctrl_signal_t;
+
+    // PC SRC SELECT SIGNAL BRANCH/JUMP or PC
+    typedef enum logic {
+        BRANCH_JUMP_SRC = 1'b1,
+        PC_SRC          = 1'b0
+    } pc_src_sel_e;
+
+    typedef enum logic [3:0] {
+        WSTRB_NONE      = 4'b0000,
+        WSTRB_BYTE_0    = 4'b0001,
+        WSTRB_BYTE_1    = 4'b0010,
+        WSTRB_BYTE_2    = 4'b0100,
+        WSTRB_BYTE_3    = 4'b1000,
+        WSTRB_HALF_LOW  = 4'b0011,
+        WSTRB_HALF_HIGH = 4'b1100,
+        WSTRB_FULL_WORD = 4'b1111
+    } dmem_write_strobe_e;
 
 endpackage : rv32im_pkg

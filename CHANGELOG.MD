@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.1] - 2026-10-12
+
+### Added
+- Added local params RST_32BIT_VECTOR, TRAP_VECTOR, NOP_INSTR in RV32IM package
+- Added dmem_write_strobe enum
+- Added pc_src_sel enum
+- Added README.MD
+- Added stage MEM
+- Added stage IF
+
+### Changed
+- Apply RST_32BIT_VECTOR for all reset/flush signals
+- Remove NOP_INSTR from local riscv stage reg
+
 ## [0.1.6] - 2026-10-12
 
 ### Changed
