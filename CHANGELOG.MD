@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.6] - 2026-10-13
+
+### Added
+- Add hazard units and testbecnh
+
 ## [0.2.5] - 2026-10-13
 
 ### Fixed
