@@ -8,10 +8,12 @@ module tb_soc_memories;
 
     logic clk;
     logic en_write;
-    logic [ADDR_WIDTH-1:0] waddr;
-    logic [ADDR_WIDTH-1:0] raddr;
+    logic req;
+    logic [3:0] wstrobe;
+    logic [ADDR_WIDTH-1:0] addr;
     logic [DATA_WIDTH-1:0] wdata;
     logic [DATA_WIDTH-1:0] ram_rdata;
+    logic en_read;
     logic [ADDR_WIDTH-1:0] rom_raddr;
     logic [DATA_WIDTH-1:0] rom_rdata;
 
@@ -21,8 +23,9 @@ module tb_soc_memories;
     ) ram_dut (
         .clk(clk),
         .en_write(en_write),
-        .waddr(waddr),
-        .raddr(raddr),
+        .req(req),
+        .wstrobe(wstrobe),
+        .addr(addr),
         .wdata(wdata),
         .rdata(ram_rdata)
     );
@@ -33,6 +36,7 @@ module tb_soc_memories;
         .HEX_FILE("tb/instruction_rom_test.hex")
     ) rom_dut (
         .clk(clk),
+        .en_read(en_read),
         .raddr(rom_raddr),
         .rdata(rom_rdata)
     );
@@ -44,18 +48,20 @@ module tb_soc_memories;
     endfunction
 
     task automatic check_ram(
-        input logic [ADDR_WIDTH-1:0] read_address,
+        input logic [ADDR_WIDTH-1:0] access_address,
+        input logic request,
         input logic write_enable,
-        input logic [ADDR_WIDTH-1:0] write_address,
+        input logic [3:0] byte_strobe,
         input logic [DATA_WIDTH-1:0] write_data,
         input logic [DATA_WIDTH-1:0] expected_read_data,
         input string label
     );
         begin
             @(negedge clk);
-            raddr = read_address;
+            addr = access_address;
+            req = request;
             en_write = write_enable;
-            waddr = write_address;
+            wstrobe = byte_strobe;
             wdata = write_data;
 
             @(posedge clk);
@@ -64,7 +70,7 @@ module tb_soc_memories;
             if (ram_rdata !== expected_read_data) begin
                 $display("FAIL: %s", label);
                 $display("  read address=%0d got=%h expected=%h",
-                         read_address, ram_rdata, expected_read_data);
+                         access_address, ram_rdata, expected_read_data);
                 $fatal(1, "RAM read mismatch");
             end
             $display("PASS: %s", label);
@@ -78,6 +84,7 @@ module tb_soc_memories;
         begin
             @(negedge clk);
             rom_raddr = address;
+            en_read = 1'b1;
 
             @(posedge clk);
             #1;
@@ -90,42 +97,74 @@ module tb_soc_memories;
         end
     endtask
 
+    task automatic check_rom_hold(
+        input logic [ADDR_WIDTH-1:0] address,
+        input logic [DATA_WIDTH-1:0] expected_data
+    );
+        begin
+            @(negedge clk);
+            rom_raddr = address;
+            en_read = 1'b0;
+
+            @(posedge clk);
+            #1;
+
+            if (rom_rdata !== expected_data) begin
+                $display("FAIL: ROM output hold got=%h expected=%h",
+                         rom_rdata, expected_data);
+                $fatal(1, "ROM output changed while read disabled");
+            end
+            $display("PASS: ROM output holds while read is disabled");
+        end
+    endtask
+
     initial begin
         clk = 1'b0;
         en_write = 1'b0;
-        waddr = '0;
-        raddr = '0;
+        req = 1'b0;
+        wstrobe = '0;
+        addr = '0;
         wdata = '0;
+        en_read = 1'b0;
         rom_raddr = '0;
 
         $display("Initializing RAM");
         for (int i = 0; i < DEPTH; i++) begin
             @(negedge clk);
+            req = 1'b1;
             en_write = 1'b1;
-            waddr = i[ADDR_WIDTH-1:0];
+            wstrobe = 4'hF;
+            addr = i[ADDR_WIDTH-1:0];
             wdata = ram_word(i);
-            raddr = '0;
             @(posedge clk);
             #1;
         end
         en_write = 1'b0;
+        req = 1'b0;
+        wstrobe = '0;
 
         $display("Checking all RAM and ROM addresses");
         for (int i = 0; i < DEPTH; i++) begin
-            check_ram(i[ADDR_WIDTH-1:0], 1'b0, '0, '0, ram_word(i),
+            check_ram(i[ADDR_WIDTH-1:0], 1'b1, 1'b0, '0, '0, ram_word(i),
                       $sformatf("RAM address %0d", i));
             check_rom(i[ADDR_WIDTH-1:0], 32'h1000_0000 + i);
         end
+        check_rom_hold(4'd0, 32'h1000_000F);
 
-        check_ram(4'd3, 1'b1, 4'd9, 32'hDEAD_BEEF, ram_word(3),
-                  "simultaneous read and write to different addresses");
-        check_ram(4'd9, 1'b0, '0, '0, 32'hDEAD_BEEF,
-                  "write updates target address");
+        check_ram(4'd3, 1'b1, 1'b1, 4'hF, 32'hDEAD_BEEF, ram_word(3),
+                  "read and write same address returns old data");
+        check_ram(4'd3, 1'b1, 1'b0, '0, '0, 32'hDEAD_BEEF,
+                  "full-word write updates target address");
 
-        check_ram(4'd5, 1'b1, 4'd5, 32'hCAFE_BABE, ram_word(5),
-                  "same-address read-during-write returns old data");
-        check_ram(4'd5, 1'b0, '0, '0, 32'hCAFE_BABE,
-                  "same-address write is committed");
+        check_ram(4'd3, 1'b1, 1'b1, 4'b0101, 32'h1122_3344, 32'hDEAD_BEEF,
+                  "byte-strobe write returns old data");
+        check_ram(4'd3, 1'b1, 1'b0, '0, '0, 32'hDE22_BE44,
+                  "byte strobes update selected lanes only");
+
+        check_ram(4'd3, 1'b1, 1'b1, 4'b0000, 32'hFFFF_FFFF, 32'hDE22_BE44,
+                  "zero byte strobes preserve stored data");
+        check_ram(4'd3, 1'b0, 1'b1, 4'hF, 32'hFFFF_FFFF, 32'hDE22_BE44,
+                  "write disabled when request is absent");
 
         $display("All SoC memory tests passed");
         $finish;

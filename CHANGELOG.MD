@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.5] - 2026-10-13
+
+### Fixed
+- MEM addr width should be 12 bit
+- ROM only read when there is en_read
+- Data of DMEM only accessible when there is request
+- Only init HEX file it is not none
+- Fixed testbench accordingly
+
+### Added
+- Add DMEM write stobe for correct load instructions
+
 ## [0.2.4] - 2026-10-13
 
 ### Added
