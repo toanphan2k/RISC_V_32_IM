@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.9] - 2026-10-15
+
+### Added
+- Add a simple multiplier unit using only arithmetic symbols
+- Add testbench for this multiplier module
+
 ## [0.2.8] - 2026-10-15
 
 ### Added

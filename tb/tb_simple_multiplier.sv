@@ -1,0 +1,68 @@
+`timescale 1ns/1ps
+
+import rv32im_pkg::*;
+
+module tb_simple_multiplier;
+    logic [XLEN-1:0] operand_a;
+    logic [XLEN-1:0] operand_b;
+    m_ext_opcode_e  m_opcode;
+    logic [XLEN-1:0] mul_result;
+    integer tests_run;
+
+    simple_multiplier dut (
+        .operand_a(operand_a),
+        .operand_b(operand_b),
+        .m_opcode(m_opcode),
+        .mul_result(mul_result)
+    );
+
+    task automatic check_case(
+        input logic [XLEN-1:0] a,
+        input logic [XLEN-1:0] b,
+        input m_ext_opcode_e op,
+        input logic [XLEN-1:0] expected,
+        input string label
+    );
+        begin
+            operand_a = a;
+            operand_b = b;
+            m_opcode = op;
+            #1;
+
+            if (mul_result !== expected) begin
+                $error("MULTIPLIER FAIL: %s op=%b a=%h b=%h got=%h expected=%h",
+                       label, op, a, b, mul_result, expected);
+                $fatal(1);
+            end
+
+            tests_run = tests_run + 1;
+        end
+    endtask
+
+    initial begin
+        tests_run = 0;
+        operand_a = '0;
+        operand_b = '0;
+        m_opcode = M_MUL;
+
+        $display("Starting simple multiplier tests");
+
+        check_case(32'hFFFF_FFFF, 32'd2, M_MUL, 32'hFFFF_FFFE,
+                   "low product");
+        check_case(32'h8000_0000, 32'h8000_0000, M_MULH,
+                   32'h4000_0000, "signed high product");
+        check_case(32'h8000_0000, 32'hFFFF_FFFF, M_MULHSU,
+                   32'h8000_0000, "signed by unsigned high product");
+        check_case(32'h8000_0000, 32'hFFFF_FFFF, M_MULHU,
+                   32'h7FFF_FFFF, "unsigned high product");
+        check_case(32'hFFFF_FFFF, 32'hFFFF_FFFF, M_MULHU,
+                   32'hFFFF_FFFE, "maximum unsigned product high");
+        check_case(32'h7FFF_FFFF, 32'h0000_0002, M_MULH,
+                   32'h0000_0000, "positive signed high product");
+        check_case(32'h1234_5678, 32'h8765_4321, M_DIV, 32'd0,
+                   "non-multiply opcode");
+
+        $display("All %0d simple multiplier tests passed", tests_run);
+        $finish;
+    end
+endmodule
