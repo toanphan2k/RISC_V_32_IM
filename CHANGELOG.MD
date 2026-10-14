@@ -1,9 +1,17 @@
 # Changelog
 
+## [0.2.7] - 2026-10-14
+
+### Added
+- Add radix 4 restoring div using combinational logi
+- Add testbench to test div module of radix 4 restoring
+- Author: Anh Tran
+
 ## [0.2.6] - 2026-10-13
 
 ### Added
-- Add hazard units and testbecnh
+- Add hazard units and testbench
+- Author: Anh Tran
 
 ## [0.2.5] - 2026-10-13
 
