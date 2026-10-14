@@ -84,3 +84,6 @@ The M-extension instructions all share the R-type format with `opcode = 7'b01100
 | **REMU** | `0000001` | `rs2` | `rs1` | `111` | `rd` | `0110011` | $R[rd] = R[rs1] \ \% \ R[rs2]$ (unsigned remainder) | 10 cycles in EX (9 stalls) |
 
 Divide latency = 1 setup cycle (sign/abs) + 8 radix-16 iteration stages + 1 result cycle (sign fix-up / corner cases).
+
+### Corner case of M extension
+*Link*: [DIV_BY_ZERO and OVERFLOW](https://docs.riscv.org/reference/isa/v20260120/unpriv/m-st-ext.html#divby0)

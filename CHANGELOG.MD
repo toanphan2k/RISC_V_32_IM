@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.8] - 2026-10-15
+
+### Added
+- Add a simple divider unit using only arithmetic symbols
+- Add testbench for this module
+
 ## [0.2.7] - 2026-10-14
 
 ### Added
