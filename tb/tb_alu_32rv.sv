@@ -63,6 +63,9 @@ module tb_alu_32rv;
         // SUB
         check_case(32'd10, 32'd5, ALU_SUB, 32'd5, 1'b0, 1'b0, 1'b0, "SUB");
 
+        // SUB equality drives the zero flag used by BEQ/BNE
+        check_case(32'd5, 32'd5, ALU_SUB, 32'd0, 1'b1, 1'b0, 1'b0, "SUB equal");
+
         // AND with zero result
         check_case(32'hAA55_AA55, 32'h55AA_55AA, ALU_AND, 32'd0, 1'b1, 1'b0, 1'b0, "AND");
 
@@ -84,8 +87,14 @@ module tb_alu_32rv;
         // SLT signed compare
         check_case(32'hFFFF_FFFF, 32'd1, ALU_SLT, 32'd1, 1'b0, 1'b1, 1'b0, "SLT");
 
+        // SLT must account for signed subtraction overflow
+        check_case(32'h8000_0000, 32'd1, ALU_SLT, 32'd1, 1'b0, 1'b1, 1'b0, "SLT overflow");
+
         // SLTU unsigned compare
         check_case(32'd1, 32'd2, ALU_SLTU, 32'd1, 1'b0, 1'b0, 1'b1, "SLTU");
+
+        // SLTU must use carry/borrow rather than the subtraction sign bit
+        check_case(32'hFFFF_FFFF, 32'd1, ALU_SLTU, 32'd0, 1'b1, 1'b0, 1'b0, "SLTU high unsigned");
 
         $display("All ALU tests passed");
         $finish;

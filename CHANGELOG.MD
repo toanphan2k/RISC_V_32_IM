@@ -2,6 +2,17 @@
 
 ## [0.2.11] - 2026-10-15
 
+### Changed
+- Changed 31 = XLEN -1 for flexibility
+- Changed indentation for beauty in cla_32bit, cla_32bit_lau, alu_rv32
+- Update testbench for SLT, SLTU ALU edge case
+
+### Added
+- Initiate cla_32bit inside alu unit
+- ALU results depend most on cla_32bit
+
+## [0.2.11] - 2026-10-15
+
 ### Added
 - Complete M-Unit with sample simple mul and div unit for test
 - Replace with other algorithms in code block

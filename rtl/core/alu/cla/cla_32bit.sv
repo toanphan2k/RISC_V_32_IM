@@ -1,20 +1,21 @@
 import rv32im_pkg::*;
 
 module cla_32bit (
-    input logic [XLEN-1:0]  a,
-    input logic [XLEN-1:0]  b,
-    input logic         sub_en, // 0 for addition, 1 for subtraction
+    input  logic [XLEN-1:0] a,
+    input  logic [XLEN-1:0] b,
+    input  logic            sub_en, // 0 for addition, 1 for subtraction
     output logic [XLEN-1:0] result,
-    output logic        cout,
-    output logic        overflow,
-    output logic        zero,
-    output logic        negative
+    output logic            cout,
+    output logic            overflow,
+    output logic            zero,
+    output logic            negative
 );
+
     logic [XLEN-1:0]    operand_b;
-    logic           cin;
-    logic [7:0]     gen_group;
-    logic [7:0]     prop_group;
-    logic [7:0]     block_carry;
+    logic               cin;
+    logic [7:0]         gen_group;
+    logic [7:0]         prop_group;
+    logic [7:0]         block_carry;
 
     // SUM: A + B
     // SUB: A + ~B + 1
@@ -113,13 +114,13 @@ module cla_32bit (
 
     // Overflow detection:
     // Overflow = ~(A[31] ^ B[31]) & (A[31] ^ sum[31])
-    assign overflow = !(a[31] ^ operand_b[31]) & (a[31] ^ result[31]);
+    assign overflow = !(a[XLEN-1] ^ operand_b[XLEN-1]) & (a[XLEN-1] ^ result[XLEN-1]);
     // Zero detection: result is zero if all bits are zero
-    assign zero = (result == 32'b0);
+    assign zero = (result == '0);
     ///////////////////////
     // FOR SIGN EXTENSION//
     ///////////////////////
     // Negative detection: result is negative if the sign bit (MSB) is 1
-    assign negative = result[31];
+    assign negative = result[XLEN-1];
 
 endmodule
