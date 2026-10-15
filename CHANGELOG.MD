@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.10] - 2026-10-15
+
+### Fixed
+- Wrong forwarding Selection in Forward Unit
+
+### Changed
+- Put logic into always_comb for easy to see
+- Rename file to forward_unit.sv
+- Rename file to hazard_unit.sv
+- Change indent
+
 ## [0.2.9] - 2026-10-15
 
 ### Added

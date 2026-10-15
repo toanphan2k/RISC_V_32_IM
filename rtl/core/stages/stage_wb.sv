@@ -24,29 +24,29 @@ module stage_wb(
 
     always_comb begin : LOADED_BYTE_DATA
         case (byte_offset)
-            2'b00: loaded_byte = dmem_rdata[7:0];
-            2'b01: loaded_byte = dmem_rdata[15:8];
-            2'b10: loaded_byte = dmem_rdata[23:16];
-            default: loaded_byte = dmem_rdata[31:24];
+            2'b00:      loaded_byte = dmem_rdata[7:0];
+            2'b01:      loaded_byte = dmem_rdata[15:8];
+            2'b10:      loaded_byte = dmem_rdata[23:16];
+            default:    loaded_byte = dmem_rdata[31:24];
         endcase
 
         loaded_half = byte_offset[1] ? dmem_rdata[31:16] : dmem_rdata[15:0]
         case (wb_ctrl.funct3)
-            LD_LB: wb_load_data = {{24{loaded_byte[7]}}, loaded_byte};
-            LD_LH: wb_load_data = {{16{loaded_half[15]}}, loaded_half};
-            LD_LBU: wb_load_data = {24'b0, loaded_byte};
-            LD_LHU: wb_load_data = {16'b0, loaded_half};
-            default: wb_load_data = dmem_rdata;
+            LD_LB:      wb_load_data = {{24{loaded_byte[7]}}, loaded_byte};
+            LD_LH:      wb_load_data = {{16{loaded_half[15]}}, loaded_half};
+            LD_LBU:     wb_load_data = {24'b0, loaded_byte};
+            LD_LHU:     wb_load_data = {16'b0, loaded_half};
+            default:    wb_load_data = dmem_rdata;
         endcase
     end
 
     always_comb begin : WB_SRC_SELECT
         case (wb_ctrl.wb_src_sel)
-            WB_SRC_ALU: wb_data = wb_alu_result;
-            WB_SRC_MEM: wb_data = wb_load_data;
-            WB_SRC_PC_4: wb_data = wb_pc4;
-            WB_SRC_M_EXT: wb_data = wb_m_unit_result;
-            default: wb_data = wb_alu_result;
+            WB_SRC_ALU:     wb_data = wb_alu_result;
+            WB_SRC_MEM:     wb_data = wb_load_data;
+            WB_SRC_PC_4:    wb_data = wb_pc4;
+            WB_SRC_M_EXT:   wb_data = wb_m_unit_result;
+            default:        wb_data = wb_alu_result;
         endcase
     end
 
