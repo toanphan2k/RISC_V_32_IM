@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.11] - 2026-10-15
+
+### Added
+- Complete M-Unit with sample simple mul and div unit for test
+- Replace with other algorithms in code block
+
 ## [0.2.10] - 2026-10-15
 
 ### Fixed
@@ -9,7 +15,7 @@
 - Put logic into always_comb for easy to see
 - Rename file to forward_unit.sv
 - Rename file to hazard_unit.sv
-- Change indent
+- Change indent of stage_wb
 
 ## [0.2.9] - 2026-10-15
 
