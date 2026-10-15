@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.14] - 2026-10-15
+
+### Added
+- Add a simple adder using DSP/synthesis tech resource (For comparison purpose)
+
 ## [0.2.13] - 2026-10-15
 
 ### Fixed
