@@ -1,6 +1,13 @@
 # Changelog
 
-## [0.2.11] - 2026-10-15
+## [0.2.13] - 2026-10-15
+
+### Fixed
+- Align ALU source selection and branch compare logic
+- Update control signal ports from `control_signal_t` to `ctrl_signal_t`
+- Add missing commas/semicolons that were preventing synthesis or compile checks.
+
+## [0.2.12] - 2026-10-15
 
 ### Changed
 - Changed 31 = XLEN -1 for flexibility

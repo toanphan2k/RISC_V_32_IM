@@ -6,7 +6,7 @@ module reg_id_ex (
     input  logic                    stall,
     input  logic                    flush,
     // Inputs from ID stage
-    input  control_signal_t         id_ctrl,
+    input  ctrl_signal_t            id_ctrl,
     input  logic [XLEN-1:0]         id_pc,
     input  logic [XLEN-1:0]         id_pc4,
     input  logic [XLEN-1:0]         id_imm,
@@ -16,7 +16,7 @@ module reg_id_ex (
     input  logic [REG_ADDR_WIDTH-1:0]    id_rs2_addr,
     input  logic [REG_ADDR_WIDTH-1:0]    id_rd_addr,
     // Outputs to EX stage
-    output control_signal_t         ex_ctrl,
+    output ctrl_signal_t            ex_ctrl,
     output logic [XLEN-1:0]         ex_pc,
     output logic [XLEN-1:0]         ex_pc4,
     output logic [XLEN-1:0]         ex_imm,
@@ -24,10 +24,10 @@ module reg_id_ex (
     output logic [XLEN-1:0]         ex_rs2_data,
     output logic [REG_ADDR_WIDTH-1:0]    ex_rs1_addr,
     output logic [REG_ADDR_WIDTH-1:0]    ex_rs2_addr,
-    output logic [REG_ADDR_WIDTH-1:0]    ex_rd_addr,
+    output logic [REG_ADDR_WIDTH-1:0]    ex_rd_addr
 );
 
-    control_signal_t nop_ctrl;
+    ctrl_signal_t nop_ctrl;
     assign nop_ctrl = '0;
 
     always_ff @(posedge clk or negedge rst_n) begin

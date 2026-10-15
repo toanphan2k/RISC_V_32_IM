@@ -12,7 +12,7 @@ module reg_if_id (
     // Outputs to ID stage
     output logic [XLEN-1:0]     id_instr,
     output logic [XLEN-1:0]     id_pc4,
-    output logic [XLEN-1:0]     id_pc,
+    output logic [XLEN-1:0]     id_pc
 );
 
     always_ff @(posedge clk or negedge rst_n) begin

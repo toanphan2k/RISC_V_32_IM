@@ -3,9 +3,9 @@ import rv32im_pkg::*;
 module id_decoder_ctrl (
     input  logic [XLEN-1:0]             instr,
     output ctrl_signal_t                ctrl,
-    output logic [REG_ADDR_WIDTH-1:0]   rs1_addr;
-    output logic [REG_ADDR_WIDTH-1:0]   rs2_addr;
-    output logic [REG_ADDR_WIDTH-1:0]   rd_addr;
+    output logic [REG_ADDR_WIDTH-1:0]   rs1_addr,
+    output logic [REG_ADDR_WIDTH-1:0]   rs2_addr,
+    output logic [REG_ADDR_WIDTH-1:0]   rd_addr
 );
     logic [6:0] opcode;
     logic [2:0] funct3;
@@ -29,13 +29,13 @@ module id_decoder_ctrl (
         ctrl.alu_opcode     = ALU_ADD;
         ctrl.m_ext_opcode   = M_MUL;
         ctrl.alu_src_a_sel  = ALU_SRC_A_RS1;
-        ctrl.alu_src_b_sel  = ALU_SRC_A_RS2;
+        ctrl.alu_src_b_sel  = ALU_SRC_B_RS2;
         ctrl.wb_src_sel     = WB_SRC_ALU;
         ctrl.funct3         = funct3;
         ctrl.is_fence       = 1'b0;
         ctrl.is_ecall       = 1'b0;
         ctrl.is_ebreak      = 1'b0;
-        ctrl.illegal_instr  = 1'b0
+        ctrl.illegal_instr  = 1'b0;
 
         case (opcode)
             OP_IMM: begin
@@ -60,7 +60,7 @@ module id_decoder_ctrl (
             OP_REG: begin
                 ctrl.en_reg_write  = 1'b1;
                 ctrl.alu_src_a_sel = ALU_SRC_A_RS1;
-                ctrl.alu_src_b_sel = ALU_SRC_A_RS1;
+                ctrl.alu_src_b_sel = ALU_SRC_B_RS2;
 
                 if (funct7 == FUNCT7_M) begin
                     ctrl.en_m_ext = 1'b1;
@@ -77,7 +77,7 @@ module id_decoder_ctrl (
                         default:    ctrl.illegal_instr = 1'b1;
                     endcase
                 end else if (funct7 == FUNCT7_I || funct7 == FUNCT7_I_SHIFT) begin
-                    ctrl.wb_src_sel = WB_SRC_ALU
+                    ctrl.wb_src_sel = WB_SRC_ALU;
                     case (funct3)
                         ADD:        ctrl.alu_opcode = funct7[5] ? ALU_ADD : ALU_SUB;
                         SLT:        ctrl.alu_opcode = ALU_SLT;
@@ -113,12 +113,12 @@ module id_decoder_ctrl (
             OP_BRANCH: begin
                 ctrl.en_branch      = 1'b1;
                 ctrl.alu_src_a_sel  = ALU_SRC_A_RS1;
-                ctrl.alu_src_b_sel  = ALU_SRC_A_RS2;
+                ctrl.alu_src_b_sel  = ALU_SRC_B_RS2;
                 case (funct3)
-                    BR_BEQ, BR_BNE: ctrl.alu_opcode     = ALU_ADD;
-                    BR_BLT, BR_BGE: ctrl.alu_opcode     = ALU_SLT;
-                    BR_BLTU, BR_BGEU: ctrl.alu_opcode   = ALU_SLTU;
-                    default: ctrl.alu_opcode            = ALU_SUB;
+                    BR_BEQ, BR_BNE:   ctrl.alu_opcode     = ALU_SUB;
+                    BR_BLT, BR_BGE:   ctrl.alu_opcode     = ALU_SLT;
+                    BR_BLTU, BR_BGEU: ctrl.alu_opcode     = ALU_SLTU;
+                    default: ctrl.alu_opcode              = ALU_SUB;
                 endcase
             end
 

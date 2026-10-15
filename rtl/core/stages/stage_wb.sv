@@ -10,7 +10,7 @@ module stage_wb(
     // write signal travel back to ID stage
     output logic [XLEN-1:0]             en_reg_write,
     output logic [REG_ADDR_WIDTH-1:0]   wb_out_rd_addr,
-    output logic [XLEN-1:0]             wb_data,
+    output logic [XLEN-1:0]             wb_data
 );
 
     logic [1:0] byte_offset;
@@ -30,7 +30,7 @@ module stage_wb(
             default:    loaded_byte = dmem_rdata[31:24];
         endcase
 
-        loaded_half = byte_offset[1] ? dmem_rdata[31:16] : dmem_rdata[15:0]
+        loaded_half = byte_offset[1] ? dmem_rdata[31:16] : dmem_rdata[15:0];
         case (wb_ctrl.funct3)
             LD_LB:      wb_load_data = {{24{loaded_byte[7]}}, loaded_byte};
             LD_LH:      wb_load_data = {{16{loaded_half[15]}}, loaded_half};

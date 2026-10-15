@@ -6,14 +6,14 @@ module reg_ex_mem (
     input  logic                    stall,
     input  logic                    flush,
     // Inputs from EX stage
-    input  control_signal_t         ex_ctrl,
+    input  ctrl_signal_t            ex_ctrl,
     input  logic [XLEN-1:0]         ex_pc4,
     input  logic [XLEN-1:0]         ex_alu_result,
     input  logic [XLEN-1:0]         ex_m_unit_result,
     input  logic [XLEN-1:0]         ex_rs2_data,
     input  logic [REG_ADDR_WIDTH-1:0]    ex_rd_addr,
     // Outputs to MEM stage
-    output control_signal_t         mem_ctrl,
+    output ctrl_signal_t            mem_ctrl,
     output logic [XLEN-1:0]         mem_pc4,
     output logic [XLEN-1:0]         mem_alu_result,
     output logic [XLEN-1:0]         mem_m_unit_result,
@@ -21,7 +21,7 @@ module reg_ex_mem (
     output logic [REG_ADDR_WIDTH-1:0]    mem_rd_addr
 );
 
-    control_signal_t nop_ctrl;
+    ctrl_signal_t nop_ctrl;
     assign nop_ctrl = '0;
 
     always_ff @(posedge clk or negedge rst_n) begin

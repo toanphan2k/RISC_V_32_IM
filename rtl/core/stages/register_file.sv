@@ -1,16 +1,16 @@
 module register_file (
-    input logic clk;
-    input logic rstn;
+    input  logic clk,
+    input  logic rstn,
 
-    input  logic [REG_ADDR_WIDTH-1:0]   raddr1;
-    output logic [XLEN-1:0]             rdata1;
+    input  logic [REG_ADDR_WIDTH-1:0]   raddr1,
+    output logic [XLEN-1:0]             rdata1,
 
-    input  logic [REG_ADDR_WIDTH-1:0]   raddr2;
-    output logic [XLEN-1:0]             rdata2;
+    input  logic [REG_ADDR_WIDTH-1:0]   raddr2,
+    output logic [XLEN-1:0]             rdata2,
 
-    input  logic en_write;
-    input  logic [REG_ADDR_WIDTH-1:0]   waddr;
-    input  logic [XLEN-1:0]             wdata;
+    input  logic en_write,
+    input  logic [REG_ADDR_WIDTH-1:0]   waddr,
+    input  logic [XLEN-1:0]             wdata
 );
 
     logic [XLEN-1:0] regs[0:REG_NUM-1];
@@ -20,7 +20,7 @@ module register_file (
     always_ff @(posedge clk or negedge rstn) begin: WRITE_REG_DATA
         if(!rstn) begin
             for (i = 0; i < REG_NUM; i = i + 1) begin
-                regs[i] <= {XLEN{1'b0}}
+                regs[i] <= {XLEN{1'b0}};
             end
         end else begin
             if (en_write && (waddr != 5'b0)) begin

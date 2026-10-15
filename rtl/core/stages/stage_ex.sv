@@ -4,7 +4,7 @@ module stage_ex (
     input  logic                    clk,
     input  logic                    rst_n,
     // Inputs from ID/EX stage
-    input  control_signal_t         ex_in_ctrl,
+    input  ctrl_signal_t            ex_in_ctrl,
     input  logic [XLEN-1:0]         ex_pc,
     input  logic [XLEN-1:0]         ex_pc4,
     input  logic [XLEN-1:0]         ex_rs1_data,
@@ -17,7 +17,7 @@ module stage_ex (
     input  logic [XLEN-1:0]         fwd_mem_data,
     input  logic [XLEN-1:0]         fwd_wb_data,
     // Outputs to EX/MEM Register
-    output control_signal_t         ex_out_ctrl,
+    output ctrl_signal_t            ex_out_ctrl,
     output logic [XLEN-1:0]         ex_out_pc4,
     output logic [XLEN-1:0]         ex_out_alu_result,
     output logic [XLEN-1:0]         ex_out_m_unit_result,

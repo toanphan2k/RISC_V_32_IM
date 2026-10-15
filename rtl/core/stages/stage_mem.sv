@@ -82,7 +82,7 @@ module stage_mem(
     assign wb_out_ctrl          = mem_ctrl;
     assign wb_out_alu_result    = mem_alu_result;
     assign wb_out_m_unit_result = mem_m_unit_result;
-    assign wb_out_pc4           = mem_pc4
+    assign wb_out_pc4           = mem_pc4;
     assign wb_out_rd_addr       = mem_rd_addr;
 
     // Forwarding Data (ALU, M-EXT, PC4)
@@ -92,7 +92,7 @@ module stage_mem(
         case (mem_ctrl.wb_src_sel)
             WB_SRC_ALU:     mem_fwd_data = mem_alu_result;
             WB_SRC_PC_4:    mem_fwd_data = mem_pc4;
-            WB_SRC_M_EXT:   mem_fwd_data = mem_m_unit_result
+            WB_SRC_M_EXT:   mem_fwd_data = mem_m_unit_result;
             default:        mem_fwd_data = mem_alu_result;
         endcase
     end
