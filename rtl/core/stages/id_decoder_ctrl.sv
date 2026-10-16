@@ -36,10 +36,13 @@ module id_decoder_ctrl (
         ctrl.is_ecall       = 1'b0;
         ctrl.is_ebreak      = 1'b0;
         ctrl.illegal_instr  = 1'b0;
+        ctrl.uses_rs1       = 1'b0;
+        ctrl.uses_rs2       = 1'b0;
 
         case (opcode)
             OP_IMM: begin
                 // Similar to OP_REG but RS2 is IMM
+                ctrl.uses_rs1      = 1'b1;
                 ctrl.en_reg_write  = 1'b1;
                 ctrl.alu_src_a_sel = ALU_SRC_A_RS1;
                 ctrl.alu_src_b_sel = ALU_SRC_B_IMM;
@@ -58,6 +61,8 @@ module id_decoder_ctrl (
             end
 
             OP_REG: begin
+                ctrl.uses_rs1      = 1'b1;
+                ctrl.uses_rs2      = 1'b1;
                 ctrl.en_reg_write  = 1'b1;
                 ctrl.alu_src_a_sel = ALU_SRC_A_RS1;
                 ctrl.alu_src_b_sel = ALU_SRC_B_RS2;
@@ -96,6 +101,7 @@ module id_decoder_ctrl (
 
             OP_LOAD: begin
                 ctrl.en_reg_write   = 1'b1;
+                ctrl.uses_rs1       = 1'b1;
                 ctrl.en_mem_read    = 1'b1;
                 ctrl.alu_src_a_sel  = ALU_SRC_A_RS1;
                 ctrl.alu_src_b_sel  = ALU_SRC_B_IMM;
@@ -104,6 +110,8 @@ module id_decoder_ctrl (
             end
 
             OP_STORE: begin
+                ctrl.uses_rs1       = 1'b1;
+                ctrl.uses_rs2       = 1'b1;
                 ctrl.en_mem_write   = 1'b1;
                 ctrl.alu_src_a_sel  = ALU_SRC_A_RS1;
                 ctrl.alu_src_b_sel  = ALU_SRC_B_IMM;
@@ -111,6 +119,8 @@ module id_decoder_ctrl (
             end
 
             OP_BRANCH: begin
+                ctrl.uses_rs1       = 1'b1;
+                ctrl.uses_rs2       = 1'b1;
                 ctrl.en_branch      = 1'b1;
                 ctrl.alu_src_a_sel  = ALU_SRC_A_RS1;
                 ctrl.alu_src_b_sel  = ALU_SRC_B_RS2;
@@ -147,6 +157,7 @@ module id_decoder_ctrl (
             end
 
             OP_JALR: begin
+                ctrl.uses_rs1       = 1'b1;
                 ctrl.en_jump        = 1'b1;
                 ctrl.en_jalr        = 1'b1;
                 ctrl.en_reg_write   = 1'b1;

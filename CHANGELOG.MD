@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.16] - 2026-10-16
+
+### Changed
+- Redesinged and improve hazzard unit
+- Add conditions to reduce CPU from stall more often, more strict conditon
+- Condition internal cpu reg location for stall and flush
+
+## Added
+- Add signal control for better ctrl.uses_rs1 harzard dectection control
+
 ## [0.2.15] - 2026-10-16
 
 ### Added

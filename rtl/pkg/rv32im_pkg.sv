@@ -158,6 +158,8 @@ package rv32im_pkg;
         logic           is_ecall;
         logic           is_ebreak;
         logic           illegal_instr; // not yet handle, need to be handled
+        logic           uses_rs1;
+        logic           uses_rs2;
     } ctrl_signal_t;
 
     // PC SRC SELECT SIGNAL BRANCH/JUMP or PC
