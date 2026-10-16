@@ -13,8 +13,9 @@ module tb_cla_4bit;
     logic       gen_group;
     logic       prop_group;
 
-    // Internal tracker for error count
-    int error_count = 0;
+    int tests = 0;
+    int passed = 0;
+    int failed = 0;
 
     // Instantiate Design Under Test (DUT)
     cla_4bit dut (
@@ -34,12 +35,14 @@ module tb_cla_4bit;
 
         expected = a + b + cin; // Golden reference calculation
 
+        tests++;
         if ({cout, sum} !== expected) begin
-            $error("[%s FAILED] A=%b, B=%b, Cin=%b | Expected: {Cout=%b, Sum=%b} | Got: {Cout=%b, Sum=%b}",
-                   test_type, a, b, cin, expected[4], expected[3:0], cout, sum);
-            error_count++;
+            $display("[FAIL] %s | A=%b, B=%b, Cin=%b | Expected: {Cout=%b, Sum=%b} | Got: {Cout=%b, Sum=%b}",
+                     test_type, a, b, cin, expected[4], expected[3:0], cout, sum);
+            failed++;
         end else begin
-            $display("[%s PASSED] A=%4b (%0d), B=%4b (%0d), Cin=%b | Result: Cout=%b, Sum=%4b (%0d)",
+            passed++;
+            $display("[PASS] %s | A=%4b (%0d), B=%4b (%0d), Cin=%b | Result: Cout=%b, Sum=%4b (%0d)",
                      test_type, a, a, b, b, cin, cout, sum, sum);
         end
     endtask
@@ -98,14 +101,12 @@ module tb_cla_4bit;
         // ----------------------------------------------------
         // SUMMARY
         // ----------------------------------------------------
-        $display("\n==================================================");
-        if (error_count == 0) begin
-            $display("   ALL TESTS PASSED SUCCESSFULLY! (0 Errors)");
-        end else begin
-            $display("   TESTBENCH FAILED: %0d Errors Detected.", error_count);
-        end
-        $display("==================================================");
-
+        $display("\n============= cla_4bit SUMMARY =============");
+        $display("Total: %0d | Passed: %0d | Failed: %0d", tests, passed, failed);
+        if (failed == 0) $display("RESULT: ALL TESTS PASSED");
+        else             $display("RESULT: TESTS FAILED");
+        $display("============================================");
+        if (failed != 0) $fatal(1, "cla_4bit: %0d test(s) failed", failed);
         $finish;
     end
 

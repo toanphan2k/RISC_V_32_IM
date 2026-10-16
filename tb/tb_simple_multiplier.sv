@@ -8,6 +8,8 @@ module tb_simple_multiplier;
     m_ext_opcode_e  m_opcode;
     logic [XLEN-1:0] mul_result;
     integer tests_run;
+    integer passed;
+    integer failed;
 
     simple_multiplier dut (
         .operand_a(operand_a),
@@ -29,18 +31,22 @@ module tb_simple_multiplier;
             m_opcode = op;
             #1;
 
-            if (mul_result !== expected) begin
-                $error("MULTIPLIER FAIL: %s op=%b a=%h b=%h got=%h expected=%h",
-                       label, op, a, b, mul_result, expected);
-                $fatal(1);
-            end
-
             tests_run = tests_run + 1;
+            if (mul_result !== expected) begin
+                failed = failed + 1;
+                $display("[FAIL] %s op=%b a=%h b=%h got=%h expected=%h",
+                       label, op, a, b, mul_result, expected);
+            end else begin
+                passed = passed + 1;
+                $display("[PASS] %s", label);
+            end
         end
     endtask
 
     initial begin
         tests_run = 0;
+        passed = 0;
+        failed = 0;
         operand_a = '0;
         operand_b = '0;
         m_opcode = M_MUL;
@@ -62,7 +68,13 @@ module tb_simple_multiplier;
         check_case(32'h1234_5678, 32'h8765_4321, M_DIV, 32'd0,
                    "non-multiply opcode");
 
-        $display("All %0d simple multiplier tests passed", tests_run);
+        $display("===== simple_multiplier SUMMARY =====");
+        $display("Total: %0d | Passed: %0d | Failed: %0d",
+                 tests_run, passed, failed);
+        if (failed == 0) $display("RESULT: ALL TESTS PASSED");
+        else             $display("RESULT: TESTS FAILED");
+        $display("=====================================");
+        if (failed != 0) $fatal(1, "simple_multiplier: %0d test(s) failed", failed);
         $finish;
     end
 endmodule

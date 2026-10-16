@@ -131,20 +131,19 @@ module tb_div;
 
         // Final report
         $display("");
-        $display("========================================");
-        $display("             TEST SUMMARY");
-        $display("========================================");
-        $display("Total tests : %0d", test_count);
-        $display("Passed      : %0d", test_count - error_count);
-        $display("Failed      : %0d", error_count);
+        $display("===== radix4_divider_comb SUMMARY =====");
+        $display("Total: %0d | Passed: %0d | Failed: %0d",
+                 test_count, test_count - error_count, error_count);
 
         if (error_count == 0)
             $display("RESULT: ALL TESTS PASSED");
         else
-            $display("RESULT: TEST FAILED");
+            $display("RESULT: TESTS FAILED");
 
-        $display("========================================");
+        $display("=======================================");
 
+        if (error_count != 0)
+            $fatal(1, "radix4_divider_comb: %0d test(s) failed", error_count);
         $finish;
     end
 

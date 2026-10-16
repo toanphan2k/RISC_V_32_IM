@@ -17,6 +17,10 @@ module tb_soc_memories;
     logic [ADDR_WIDTH-1:0] rom_raddr;
     logic [DATA_WIDTH-1:0] rom_rdata;
 
+    int tests = 0;
+    int passed = 0;
+    int failed = 0;
+
     single_port_ram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH)
@@ -67,13 +71,16 @@ module tb_soc_memories;
             @(posedge clk);
             #1;
 
+            tests++;
             if (ram_rdata !== expected_read_data) begin
-                $display("FAIL: %s", label);
+                failed++;
+                $display("[FAIL] %s", label);
                 $display("  read address=%0d got=%h expected=%h",
                          access_address, ram_rdata, expected_read_data);
-                $fatal(1, "RAM read mismatch");
+            end else begin
+                passed++;
+                $display("[PASS] %s", label);
             end
-            $display("PASS: %s", label);
         end
     endtask
 
@@ -89,10 +96,14 @@ module tb_soc_memories;
             @(posedge clk);
             #1;
 
+            tests++;
             if (rom_rdata !== expected_data) begin
-                $display("FAIL: ROM address=%0d got=%h expected=%h",
+                failed++;
+                $display("[FAIL] ROM address=%0d got=%h expected=%h",
                          address, rom_rdata, expected_data);
-                $fatal(1, "ROM read mismatch");
+            end else begin
+                passed++;
+                $display("[PASS] ROM address=%0d", address);
             end
         end
     endtask
@@ -109,12 +120,15 @@ module tb_soc_memories;
             @(posedge clk);
             #1;
 
+            tests++;
             if (rom_rdata !== expected_data) begin
-                $display("FAIL: ROM output hold got=%h expected=%h",
+                failed++;
+                $display("[FAIL] ROM output hold got=%h expected=%h",
                          rom_rdata, expected_data);
-                $fatal(1, "ROM output changed while read disabled");
+            end else begin
+                passed++;
+                $display("[PASS] ROM output holds while read is disabled");
             end
-            $display("PASS: ROM output holds while read is disabled");
         end
     endtask
 
@@ -166,7 +180,12 @@ module tb_soc_memories;
         check_ram(4'd3, 1'b0, 1'b1, 4'hF, 32'hFFFF_FFFF, 32'hDE22_BE44,
                   "write disabled when request is absent");
 
-        $display("All SoC memory tests passed");
+        $display("===== SoC memories SUMMARY =====");
+        $display("Total: %0d | Passed: %0d | Failed: %0d", tests, passed, failed);
+        if (failed == 0) $display("RESULT: ALL TESTS PASSED");
+        else             $display("RESULT: TESTS FAILED");
+        $display("================================");
+        if (failed != 0) $fatal(1, "SoC memories: %0d test(s) failed", failed);
         $finish;
     end
 

@@ -11,6 +11,9 @@ module tb_alu_32rv;
     logic zero_flag;
     logic less_than_flag;
     logic less_than_unsigned_flag;
+    int tests = 0;
+    int passed = 0;
+    int failed = 0;
 
     alu_rv32 dut (
         .operand_a(operand_a),
@@ -39,17 +42,19 @@ module tb_alu_32rv;
 
             #1;
 
+            tests++;
             if ((result !== expected_result) ||
                 (zero_flag !== expected_zero) ||
                 (less_than_flag !== expected_lt) ||
                 (less_than_unsigned_flag !== expected_ltu)) begin
-                $display("FAIL: %s", label);
+                failed++;
+                $display("[FAIL] %s", label);
                 $display("  a=%0d b=%0d op=%0d", a, b, op);
                 $display("  got: result=%0d zero=%0b lt=%0b ltu=%0b", result, zero_flag, less_than_flag, less_than_unsigned_flag);
                 $display("  exp: result=%0d zero=%0b lt=%0b ltu=%0b", expected_result, expected_zero, expected_lt, expected_ltu);
-                $fatal(1, "ALU mismatch");
             end else begin
-                $display("PASS: %s", label);
+                passed++;
+                $display("[PASS] %s", label);
             end
         end
     endtask
@@ -96,7 +101,12 @@ module tb_alu_32rv;
         // SLTU must use carry/borrow rather than the subtraction sign bit
         check_case(32'hFFFF_FFFF, 32'd1, ALU_SLTU, 32'd0, 1'b1, 1'b0, 1'b0, "SLTU high unsigned");
 
-        $display("All ALU tests passed");
+        $display("===== alu_rv32 SUMMARY =====");
+        $display("Total: %0d | Passed: %0d | Failed: %0d", tests, passed, failed);
+        if (failed == 0) $display("RESULT: ALL TESTS PASSED");
+        else             $display("RESULT: TESTS FAILED");
+        $display("============================");
+        if (failed != 0) $fatal(1, "alu_rv32: %0d test(s) failed", failed);
         $finish;
     end
 
