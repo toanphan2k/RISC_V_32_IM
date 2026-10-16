@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.15] - 2026-10-16
+
+### Added
+- Introduce Ripple Carry Adder Unit for comparison
+
+### Changed
+- Change cla testbench to a more general testbench, for all adder
+
 ## [0.2.14] - 2026-10-15
 
 ### Added

@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module tb_cla_32bit;
+ module tb_adder_32bit;
     // Testbench signals
     logic [31:0]  a;
     logic [31:0]  b;
@@ -11,7 +11,8 @@ module tb_cla_32bit;
     logic         zero;
     logic         negative;
 
-    // Instantiate the module under test
+    // Instantiate CLA module under test
+    /*
     cla_32bit dut (
         .a(a),
         .b(b),
@@ -22,10 +23,40 @@ module tb_cla_32bit;
         .zero(zero),
         .negative(negative)
     );
+    */
+    // END CLA module under test
+
+    // Instantiate Simple Adder module under test
+    /*
+    simple_32bit_adder dut (
+        .a(a),
+        .b(b),
+        .sub_en(sub_en),
+        .result(result),
+        .cout(cout),
+        .overflow(overflow),
+        .zero(zero),
+        .negative(negative)
+    );
+    */
+    // END Simple Adder module under test
+
+    // Instantiate RCA module under test
+    rca_32bit dut (
+        .a(a),
+        .b(b),
+        .sub_en(sub_en),
+        .result(result),
+        .cout(cout),
+        .overflow(overflow),
+        .zero(zero),
+        .negative(negative)
+    );
+    // END RCA module under test
 
     // Test procedure
     initial begin
-        $display("Starting CLA 32-bit Testbench");
+        $display("Starting ADDER 32-bit Testbench");
         $display("================================");
 
         // Test 1: Addition - Simple case (5 + 3 = 8)
