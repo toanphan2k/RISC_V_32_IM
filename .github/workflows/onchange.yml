@@ -27,10 +27,13 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Dummy stage
-        run: | 
+        run: |
           echo Hello, world!
-          This is to introduce git workflow for my RISCV Project
+          echo This is to introduce git workflow for my RISCV Project
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Check system
         run: uname -a
+
+      - name: Check repo existence
+        run: which repo
