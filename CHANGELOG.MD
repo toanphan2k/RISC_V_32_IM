@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.18] - 2026-10-18
+
+### Fixed
+- Fixed missing is_mul and is_div in m unit.
+- Fixed wrong signal selection in stage_ex.
+- Fixed wrong input range values in M UNIT.
+
 ## [0.2.17] - 2026-10-16
 
 ### Changed

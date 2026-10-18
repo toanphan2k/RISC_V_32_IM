@@ -70,7 +70,7 @@ module stage_ex (
     end
 
     always_comb begin: ALU_OPERAND_B_SEL
-        case(ex_in_ctrl.alu_src_a_sel)
+        case(ex_in_ctrl.alu_src_b_sel)
             ALU_SRC_B_RS2:  alu_operand_b = fwd_rs2_data;
             ALU_SRC_B_IMM:  alu_operand_b = ex_imm;
             default:        alu_operand_b = fwd_rs2_data;
@@ -78,7 +78,7 @@ module stage_ex (
     end
 
     // Block 3.1: ALU  Operation
-    alu_rv32 unit_alu32(
+    alu_rv32 alu32_u (
         .operand_a(alu_operand_a),
         .operand_b(alu_operand_b),
         .opcode(ex_in_ctrl.alu_opcode),
@@ -87,8 +87,19 @@ module stage_ex (
         .less_than_flag(alu_flag_less_than),
         .less_than_unsigned_flag(alu_flag_u_less_than)
     );
+
     // Block 3.2: M_EXT_UNIT Operation
-    // TBU: M_EXTENSION_UNIT
+    m_extesion_unit m_ext_u (
+        .clk(clk),
+        .rst_n(rst_n),
+        .start(ex_in_ctrl.en_m_ext),
+        .m_opcode(ex_in_ctrl.m_ext_opcode),
+        .operand_a(alu_operand_a),
+        .operand_b(alu_operand_b),
+        .m_result(ex_out_m_unit_result),
+        .is_busy(m_unit_busy),
+        .done() // Not used in this stage, but can be used for future enhancements
+    );
 
     // Block 4: Branch Evaluation
     always_comb begin : BRANCH_EVALUATION
@@ -104,13 +115,14 @@ module stage_ex (
     end
 
     // Block 5: Branch Target Calculation
-    assign branch_taken = (ex_in_ctrl.en_branch && br_cond_met) || ex_in_ctrl.en_jump;
-    assign branch_target = ex_in_ctrl.en_jalr ? ((fwd_rs1_data + ex_imm) & 32'h1) :
-                                                (ex_pc + ex_imm);
+    assign branch_taken       = (ex_in_ctrl.en_branch && br_cond_met) || ex_in_ctrl.en_jump;
+    assign branch_target_addr = ex_in_ctrl.en_jalr ?
+                                ((fwd_rs1_data + ex_imm) & 32'hFFFF_FFFE) :
+                                (ex_pc + ex_imm);
 
     // Block 6: Outputs to EX/MEM Register
     assign ex_out_ctrl = ex_in_ctrl;
-    assign ex_rs2_data = fwd_rs2_data;
+    assign ex_out_rs2_data = fwd_rs2_data;
     assign ex_out_pc4 = ex_pc4;
     assign ex_out_rd_addr = ex_rd_addr;
 

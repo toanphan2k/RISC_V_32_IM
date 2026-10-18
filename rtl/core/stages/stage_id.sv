@@ -18,8 +18,8 @@ module stage_id (
     output logic [REG_ADDR_WIDTH-1:0]   id_rs1_addr,
     output logic [REG_ADDR_WIDTH-1:0]   id_rs2_addr,
     output logic [REG_ADDR_WIDTH-1:0]   id_rd_addr
-
 );
+
     id_decoder_ctrl id_decoder_ctrl_u(
         .instr(id_instr),
         .ctrl(id_ctrl),

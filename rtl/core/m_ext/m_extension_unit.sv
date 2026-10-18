@@ -5,9 +5,9 @@ module m_extesion_unit(
     input  logic            rst_n,
     input  logic            start,
     input  m_ext_opcode_e   m_opcode,
-    input  logic [XLEN-1]   operand_a,
-    input  logic [XLEN-1]   operand_b,
-    output logic [XLEN-1]   m_result,
+    input  logic [XLEN-1:0] operand_a,
+    input  logic [XLEN-1:0] operand_b,
+    output logic [XLEN-1:0] m_result,
     output logic            is_busy,
     output logic            done
 );
@@ -18,8 +18,17 @@ module m_extesion_unit(
     logic div_start;
     logic div_done;
 
-    logic [31:0] mul_result;
-    logic [32:0] div_result;
+    logic [XLEN-1:0] mul_result;
+    logic [XLEN-1:0] div_result;
+
+    assign is_mul = (m_opcode == M_MUL) ||
+                    (m_opcode == M_MULH) ||
+                    (m_opcode == M_MULHSU) ||
+                    (m_opcode == M_MULHU);
+    assign is_div = (m_opcode == M_DIV) ||
+                    (m_opcode == M_DIVU) ||
+                    (m_opcode == M_REM) ||
+                    (m_opcode == M_REMU);
 
     //-----------------------------------------------
     // BEGIN CODE BLOCK FOR SIMPLE M UNITS USING DSP
