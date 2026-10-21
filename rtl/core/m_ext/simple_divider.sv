@@ -4,7 +4,7 @@ module simple_divider(
     // divider using DSP resources
     input  logic [XLEN-1:0] operand_a,
     input  logic [XLEN-1:0] operand_b,
-    input  m_ext_opcode_e m_opcode,
+    input  m_ext_opcode_e   m_opcode,
     output logic [XLEN-1:0] div_result
 );
     logic overflow;

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.2] - 2026-10-22
+
+### Changed
+- Update radix4_divider_comb with div_by_zero and overflow
+
 ## [0.3.1] - 2026-10-22
 
 ### Added
