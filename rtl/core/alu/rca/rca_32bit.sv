@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-10-16
+// Design Name:
+// Module Name: rca_32bit
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: SystemVerilog implementation of the rca_32bit module.
+//
+// Dependencies: rv32im_pkg.sv
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 import rv32im_pkg::*;
 
 module rca_32bit (

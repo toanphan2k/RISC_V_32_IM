@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-10-13
+// Design Name:
+// Module Name: instruction_rom
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: SystemVerilog implementation of the instruction_rom module.
+//
+// Dependencies:
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 // Read-only Memory
 // For instruction memory
 module instruction_rom #(

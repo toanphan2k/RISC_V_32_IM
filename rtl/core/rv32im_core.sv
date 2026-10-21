@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-10-22
+// Design Name:
+// Module Name: rv32im_core
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: SystemVerilog implementation of the rv32im_core module.
+//
+// Dependencies: rv32im_pkg.sv
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 import rv32im_pkg::*;
 
 module rv32im_core (

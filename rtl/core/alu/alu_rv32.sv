@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-09-25
+// Design Name:
+// Module Name: alu_rv32
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: SystemVerilog implementation of the alu_rv32 module.
+//
+// Dependencies: rv32im_pkg.sv
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 import rv32im_pkg::*;
 
 module alu_rv32 (

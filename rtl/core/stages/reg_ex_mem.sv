@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-10-02
+// Design Name:
+// Module Name: reg_ex_mem
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: SystemVerilog implementation of the reg_ex_mem module.
+//
+// Dependencies: rv32im_pkg.sv
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 import rv32im_pkg::*;
 
 module reg_ex_mem (

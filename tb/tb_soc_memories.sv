@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-10-13
+// Design Name:
+// Module Name: tb_soc_memories
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: Simulation testbench for soc_memories.
+//
+// Dependencies:
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 `timescale 1ns/1ps
 
 module tb_soc_memories;

@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Anh Tran
+//
+// Create Date: 2026-10-14
+// Design Name:
+// Module Name: tb_radix4_divider_comb
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: Simulation testbench for radix4_divider_comb.
+//
+// Dependencies: rv32im_pkg.sv
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 
 `timescale 1ns/1ps
 

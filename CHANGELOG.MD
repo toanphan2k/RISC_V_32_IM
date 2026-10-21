@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.3] - 2026-10-22
+
+### Added
+- Added system verilog file description
+
 ## [0.3.2] - 2026-10-22
 
 ### Changed

@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-09-29
+// Design Name:
+// Module Name: cla_32bit_lau
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: SystemVerilog implementation of the cla_32bit_lau module.
+//
+// Dependencies:
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 module cla_32bit_lau (
     input  logic [7:0]  gen_group, // 8 groups of generate signals from 4-bit adders
     input  logic [7:0]  prop_group, // 8 groups of propagate signals from 4-bit adders

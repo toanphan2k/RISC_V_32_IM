@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-09-28
+// Design Name:
+// Module Name: tb_cla_4bit
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: Simulation testbench for cla_4bit.
+//
+// Dependencies:
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 `timescale 1ns/1ps
 
 module tb_cla_4bit;

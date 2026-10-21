@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-09-25
+// Design Name:
+// Module Name: tb_alu_32rv
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: Simulation testbench for alu_32rv.
+//
+// Dependencies: rv32im_pkg.sv
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 `timescale 1ns/1ps
 
 import rv32im_pkg::*;

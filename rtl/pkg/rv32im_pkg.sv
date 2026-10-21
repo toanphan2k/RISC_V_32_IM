@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company:
+// Engineer:  Toan Phan Minh
+//
+// Create Date: 2026-09-25
+// Design Name:
+// Module Name: rv32im_pkg
+// Project Name: riscv-32im
+// Target Devices:
+// Tool Versions:
+// Description: Shared RV32IM instruction-set types, constants, and control definitions.
+//
+// Dependencies:
+//
+// Revision: 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
+
 package rv32im_pkg;
     // REGISTER LENGTH
     localparam int unsigned XLEN            = 32;
