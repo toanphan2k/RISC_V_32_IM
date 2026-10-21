@@ -1,13 +1,15 @@
 import rv32im_pkg::*;
 
 module stage_id (
+    input  logic                        clk,
+    input  logic                        rst_n,
     input  logic [XLEN-1:0]             id_pc,
     input  logic [XLEN-1:0]             id_pc4,
     input  logic [XLEN-1:0]             id_instr,
     // Writeback port from WB stage
-    input  logic                        en_wb_reg_write,
+    input  logic                        wb_en_reg_write,
     input  logic [XLEN-1:0]             wb_data,
-    input  logic [XLEN-1:0]             wb_rd_addr,
+    input  logic [REG_ADDR_WIDTH-1:0]   wb_rd_addr,
     // Ouput signals to ID/EX Register
     output ctrl_signal_t                id_ctrl,
     output logic [XLEN-1:0]             id_imm,
@@ -20,10 +22,13 @@ module stage_id (
     output logic [REG_ADDR_WIDTH-1:0]   id_rd_addr
 );
 
+    assign id_out_pc  = id_pc;
+    assign id_out_pc4 = id_pc4;
+
     id_decoder_ctrl id_decoder_ctrl_u(
         .instr(id_instr),
         .ctrl(id_ctrl),
-        .rs2_addr(id_rs1_addr),
+        .rs1_addr(id_rs1_addr),
         .rs2_addr(id_rs2_addr),
         .rd_addr(id_rd_addr)
     );
@@ -35,12 +40,12 @@ module stage_id (
 
     register_file register_file_u (
         .clk(clk),
-        .rstn(rstn),
+        .rst_n(rst_n),
         .raddr1(id_rs1_addr),
         .rdata1(id_rs1_data),
         .raddr2(id_rs2_addr),
         .rdata2(id_rs2_data),
-        .en_write(en_wb_reg_write),
+        .en_write(wb_en_reg_write),
         .waddr(wb_rd_addr),
         .wdata(wb_data)
     );

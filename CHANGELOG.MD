@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0] - 2026-10-22
+
+### Added
+- Added constraint file.
+- Connect all modules to RISCV Core
+- Added testbench for ID, EX, and MEM
+
+### Fixed
+- Fixed register files
+- Fixed stage_id id_decoder_ctrl wrong input and incorect wb_rd_addr
+- Fixed stage_if: branch_target as input, add missing logic advance
+
 ## [0.2.18] - 2026-10-18
 
 ### Fixed

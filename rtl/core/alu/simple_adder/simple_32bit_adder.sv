@@ -21,6 +21,7 @@ module simple_32bit_adder (
 
     assign {cout, result} = a + operand_b + cin;
 
+    
     // Overflow detection:
     // Overflow = ~(A[31] ^ B[31]) & (A[31] ^ sum[31])
     assign overflow = !(a[XLEN-1] ^ operand_b[XLEN-1]) & (a[XLEN-1] ^ result[XLEN-1]);

@@ -8,7 +8,7 @@ module stage_wb(
     input  logic [XLEN-1:0]             wb_pc4,
     input  logic [REG_ADDR_WIDTH-1:0]   wb_rd_addr,
     // write signal travel back to ID stage
-    output logic [XLEN-1:0]             en_reg_write,
+    output logic                        wb_en_reg_write,
     output logic [REG_ADDR_WIDTH-1:0]   wb_out_rd_addr,
     output logic [XLEN-1:0]             wb_data
 );
@@ -18,7 +18,7 @@ module stage_wb(
     logic [15:0] loaded_half;
     logic [31:0] wb_load_data;
 
-    assign en_reg_write = wb_ctrl.en_reg_write;
+    assign wb_en_reg_write = wb_ctrl.en_reg_write;
     assign byte_offset = wb_alu_result[1:0];
     assign wb_out_rd_addr = wb_rd_addr;
 

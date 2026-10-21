@@ -15,11 +15,11 @@ module stage_mem(
     output logic                        dmem_req, // Request RW data memory
     output logic                        en_dmem_write,
     // output to MEM/WB register
-    output ctrl_signal_t                wb_out_ctrl,
-    output logic [XLEN-1:0]             wb_out_alu_result,
-    output logic [XLEN-1:0]             wb_out_m_unit_result,
-    output logic [XLEN-1:0]             wb_out_pc4,
-    output logic [REG_ADDR_WIDTH-1:0]   wb_out_rd_addr,
+    output ctrl_signal_t                mem_out_ctrl,
+    output logic [XLEN-1:0]             mem_out_alu_result,
+    output logic [XLEN-1:0]             mem_out_m_unit_result,
+    output logic [XLEN-1:0]             mem_out_pc4,
+    output logic [REG_ADDR_WIDTH-1:0]   mem_out_rd_addr,
     //Forwarding data to EX STAGE
     output logic [XLEN-1:0]             mem_fwd_data
 );
@@ -79,11 +79,11 @@ module stage_mem(
     end
 
     // Passthrough signal to MEM/WB register
-    assign wb_out_ctrl          = mem_ctrl;
-    assign wb_out_alu_result    = mem_alu_result;
-    assign wb_out_m_unit_result = mem_m_unit_result;
-    assign wb_out_pc4           = mem_pc4;
-    assign wb_out_rd_addr       = mem_rd_addr;
+    assign mem_out_ctrl          = mem_ctrl;
+    assign mem_out_alu_result    = mem_alu_result;
+    assign mem_out_m_unit_result = mem_m_unit_result;
+    assign mem_out_pc4           = mem_pc4;
+    assign mem_out_rd_addr       = mem_rd_addr;
 
     // Forwarding Data (ALU, M-EXT, PC4)
     // Load data is collected in in WB, because of sync dmem

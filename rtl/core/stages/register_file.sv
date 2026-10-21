@@ -1,6 +1,8 @@
+import rv32im_pkg::*;
+
 module register_file (
     input  logic clk,
-    input  logic rstn,
+    input  logic rst_n,
 
     input  logic [REG_ADDR_WIDTH-1:0]   raddr1,
     output logic [XLEN-1:0]             rdata1,
@@ -17,8 +19,8 @@ module register_file (
 
     // Synchronous write data
     integer i;
-    always_ff @(posedge clk or negedge rstn) begin: WRITE_REG_DATA
-        if(!rstn) begin
+    always_ff @(posedge clk or negedge rst_n) begin: WRITE_REG_DATA
+        if(!rst_n) begin
             for (i = 0; i < REG_NUM; i = i + 1) begin
                 regs[i] <= {XLEN{1'b0}};
             end
