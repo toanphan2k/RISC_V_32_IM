@@ -103,7 +103,7 @@ module id_decoder_ctrl (
                 end else if (funct7 == FUNCT7_I || funct7 == FUNCT7_I_SHIFT) begin
                     ctrl.wb_src_sel = WB_SRC_ALU;
                     case (funct3)
-                        ADD:        ctrl.alu_opcode = funct7[5] ? ALU_ADD : ALU_SUB;
+                        ADD:        ctrl.alu_opcode = funct7[5] ? ALU_SUB : ALU_ADD;
                         SLT:        ctrl.alu_opcode = ALU_SLT;
                         SLTU:       ctrl.alu_opcode = ALU_SLTU;
                         XOR:        ctrl.alu_opcode = ALU_XOR;

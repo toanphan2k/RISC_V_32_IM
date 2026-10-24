@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.3] - 2026-10-24
+
+### Added
+- Added testbench for rv32im_core.sv
+
+### Fixed
+- BUG: funct7[5] == 1, then opcode is SUB, not ADD
+
+### Changed
+- Modify testbench contributors to Copilot and Chat GPT
+- Add encode_r to stage_id testbench
+
 ## [0.3.3] - 2026-10-22
 
 ### Added

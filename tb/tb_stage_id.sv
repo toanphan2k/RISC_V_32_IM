@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company:
-// Engineer:  Toan Phan Minh
+// Engineer: Copilot
 //
 // Create Date: 2026-10-22
 // Design Name:
@@ -75,6 +75,17 @@ module tb_stage_id;
         input logic [6:0] opcode
     );
         encode_i = {imm, rs1, funct3, rd, opcode};
+    endfunction
+
+    function automatic logic [XLEN-1:0] encode_r(
+        input logic [6:0] opcode,
+        input logic [4:0] rd,
+        input logic [2:0] funct3,
+        input logic [4:0] rs1,
+        input logic [4:0] rs2,
+        input logic [6:0] funct7
+    );
+        encode_r = {funct7, rs2, rs1, funct3, rd, opcode};
     endfunction
 
     function automatic logic [XLEN-1:0] encode_s(
@@ -214,9 +225,17 @@ module tb_stage_id;
                      32'h0100_00EF, 5'd0, 5'd16, 5'd1, 32'd16,
                      0, 0, 1, 0, 0, 0, 1);
         check_decode("R-type instruction uses both operands",
-                     {7'b0, 5'd2, 5'd1, ADD, 5'd3, OP_REG},
+                     encode_r(OP_REG, 5'd3, ADD, 5'd1, 5'd2, 7'b0000000),
                      5'd1, 5'd2, 5'd3, 32'd0,
                      1, 1, 1, 0, 0, 0, 0);
+        record_result("R-type ADD selects ALU_ADD",
+                      id_ctrl.alu_opcode === ALU_ADD);
+        check_decode("R-type SUB uses both operands",
+                     encode_r(OP_REG, 5'd4, ADD, 5'd3, 5'd1, 7'b0100000),
+                     5'd3, 5'd1, 5'd4, 32'd0,
+                     1, 1, 1, 0, 0, 0, 0);
+        record_result("R-type SUB selects ALU_SUB",
+                      id_ctrl.alu_opcode === ALU_SUB);
         check_decode("M-extension instruction decodes M control",
                      {7'b0000001, 5'd2, 5'd1, M_DIV, 5'd3, OP_REG},
                      5'd1, 5'd2, 5'd3, 32'd0,
